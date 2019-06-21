@@ -12,7 +12,7 @@ apply plugin: 'io.spring.dependency-management'
 //apply plugin: 'com.google.protobuf' version '0.8.8'
 
 group = 'sd.examples'
-version = '0.0.1-SNAPSHOT'
+version = '1.0-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 def grpcVersion = '1.20.0' // CURRENT_GRPC_VERSION

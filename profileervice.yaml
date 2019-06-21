@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
       - name: profileservice
-        image: sibendudas/grpcenvoy/profileservice
+        image: sibendudas/profileservice
         ports:
         - name: grpc
           containerPort: 8980
