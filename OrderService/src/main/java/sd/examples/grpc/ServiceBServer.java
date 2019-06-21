@@ -84,7 +84,7 @@ public class ServiceBServer {
    * Main method.  This comment makes the linter happy.
    */
   public static void main(String[] args) throws Exception {
-    ServiceBServer server = new ServiceBServer(8982);
+    ServiceBServer server = new ServiceBServer(8980);
     server.start();
     server.blockUntilShutdown();
   }

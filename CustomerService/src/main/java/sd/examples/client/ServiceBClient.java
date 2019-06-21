@@ -30,7 +30,7 @@ public class ServiceBClient {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		ServiceBClient client = new ServiceBClient("serviceb", 8980);
+		ServiceBClient client = new ServiceBClient("orderservice", 8980);
 		try {
 			Customer customer = Customer.newBuilder().setId(2).build();
 			customer = client.getOrders(customer);

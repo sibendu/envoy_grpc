@@ -6,4 +6,4 @@ RUN unzip -o ProfileService.zip
 
 EXPOSE 8980
 
-ENTRYPOINT ["/AService/bin/profile-server"]
+ENTRYPOINT ["/ProfileService/bin/profile-server"]
