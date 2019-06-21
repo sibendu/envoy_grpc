@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "sd.examples.grpc.model.serviceb";
+option java_outer_classname = "ServiceBProto";
+option objc_class_prefix = "SD";
+
+package serviceb;  
+
+// Interface exported by the server.
+service ServiceB {
+
+  // A simple RPC.
+   rpc GetOrders(Customer) returns (Customer) {}
+}
+
+message Item {
+  int32 id = 1;
+  string code = 2;
+  int32 quantity = 3;
+  int32 value = 4;
+}
+
+
+message Order {
+  int32 id = 1;
+  string date = 2;
+  int32 total = 3;
+  repeated Item item = 4; 	 
+}
+
+message Customer {
+  int32 id = 1;
+  string name = 2;
+  repeated Order order = 3; 	   
+}

@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: profileservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: profileservice
+    spec:
+      containers:
+      - name: profileservice
+        image: sibendudas/grpcenvoy/profileservice
+        ports:
+        - name: grpc
+          containerPort: 8980
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: profileservice
+  labels:
+    app: profileservice
+spec:
+  type: ClusterIP
+  selector:
+    app: profileservice
+  ports:
+  - name: grpc
+    port: 8980
+    targetPort: grpc
+    protocol: TCP

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "sd.examples.grpc.model.servicea";
+option java_outer_classname = "ServiceAProto";
+option objc_class_prefix = "SD";
+
+package servicea;  
+
+// Interface exported by the server.
+service ServiceA {
+
+  // A simple RPC.
+  rpc GetFeature(Customer) returns (Customer) {}
+}
+
+message Customer {
+  int32 id = 1;
+  string name = 2;
+  string address = 3; 	   
+}

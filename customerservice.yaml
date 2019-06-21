@@ -1,0 +1,33 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: customerservice
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: customerservice
+    spec:
+      containers:
+      - name: customerservice
+        image: sibendudas/grpcenvoy/customerservice
+        ports:
+        - name: http
+          containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: customerservice
+  labels:
+    app: customerservice
+spec:
+  clusterIP: None
+  selector:
+    app: customerservice
+  ports:
+  - name: http
+    port: 8080
+    targetPort: http
+    protocol: TCP
