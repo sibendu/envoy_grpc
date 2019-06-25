@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
   name: profileservice
@@ -13,8 +13,29 @@ spec:
       - name: profileservice
         image: sibendudas/profileservice
         ports:
-        - name: grpc
-          containerPort: 8980
+        - containerPort: 9980
+          name: grpc
+      - name: envoy
+        image: envoyproxy/envoy-dev:b8325ac4167284b4d566c2779c15ec3c8473dc66
+        ports:
+          - containerPort: 9901
+            protocol: TCP
+            name: envoy-admin
+          - containerPort: 8980
+            protocol: TCP
+            name: envoy-grpc
+        volumeMounts:
+          - name: envoy-config-volume
+            mountPath: /etc/envoy-config/
+        command: ["/usr/local/bin/envoy"]
+        args: ["-c", "/etc/envoy-config/envoy-config-profileservice.yaml", "--service-cluster","svccluster-profileservice"]
+      volumes:
+        - name: envoy-config-volume
+          configMap:
+            name: sidecar-config
+            items:
+              - key: envoy-config-profileservice.yaml
+                path: envoy-config-profileservice.yaml
 ---
 kind: Service
 apiVersion: v1
@@ -27,7 +48,7 @@ spec:
   selector:
     app: profileservice
   ports:
-  - name: grpc
+  - name: envoy-grpc
     port: 8980
-    targetPort: grpc
+    targetPort: envoy-grpc
     protocol: TCP
