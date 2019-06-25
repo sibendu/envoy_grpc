@@ -44,7 +44,7 @@ public class ServiceAServer {
    * Main method.  This comment makes the linter happy.
    */
   public static void main(String[] args) throws Exception {
-    ServiceAServer server = new ServiceAServer(8980);
+    ServiceAServer server = new ServiceAServer(9980);
     server.start();
     server.blockUntilShutdown();
   }
