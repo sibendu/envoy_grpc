@@ -4,6 +4,6 @@ COPY build/distributions/ProfileService.zip  ProfileService.zip
 
 RUN unzip -o ProfileService.zip
 
-EXPOSE 8980
+EXPOSE 9980
 
 ENTRYPOINT ["/ProfileService/bin/profile-server"]

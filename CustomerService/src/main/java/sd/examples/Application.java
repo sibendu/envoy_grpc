@@ -50,16 +50,20 @@ public class Application {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Customer getCustomer(@PathVariable("id") Integer id) throws Exception {
-
+		System.out.println("id == "+id);
 		Customer cust = new Customer(id, "Sibendu", "Das", new ArrayList<Order>());
 		
 		
 		sd.examples.grpc.model.servicea.Customer c1 = null;
 		ServiceAClient clientA = new ServiceAClient("profileservice", 8980);
 		try {
+			System.out.println("Before calling profileservice");
 			c1 = sd.examples.grpc.model.servicea.Customer.newBuilder().setId(cust.getId().intValue()).build();
 			c1 = clientA.getFeature(c1);
 			System.out.println(c1.toString());
+		}catch(Exception e) {
+			System.out.println("Error calling profileservice == "+e.getMessage());
+			e.printStackTrace();	
 		} finally {
 			clientA.shutdown();
 		}
@@ -67,20 +71,26 @@ public class Application {
 		sd.examples.grpc.model.serviceb.Customer c2 = null;
 		ServiceBClient clientB = new ServiceBClient("orderservice", 8980);
 		try {
+			System.out.println("Before calling orderservice");
 			c2 = sd.examples.grpc.model.serviceb.Customer.newBuilder().setId(cust.getId().intValue()).build();
 			c2 = clientB.getOrders(c2);
 			System.out.println(c2.toString());
+		}catch(Exception e) {
+			System.out.println("Error calling orderservice == "+e.getMessage());
+			e.printStackTrace();	
 		} finally {
 			clientA.shutdown();
 		}
-
+		
+		//System.out.println(c1+" :: "+c2);
 		if (c1 != null) {
+			System.out.println("Getting values returned from profileservice");
 			cust.setName(c1.getName());
 			cust.setAddress(c1.getAddress());
 		}
 
 		if (c2 != null && c2.getOrderList() != null) {
-
+			System.out.println("Getting values returned from orderservice");
 			Order oo = null;
 			for (sd.examples.grpc.model.serviceb.Order ord : c2.getOrderList()) {
 
@@ -95,7 +105,7 @@ public class Application {
 			}
 
 		}
-		
+		System.out.println("Before returning");
 		return cust;// new ResponseEntity<List<Customer>>(null, HttpStatus.OK);
 	}
 

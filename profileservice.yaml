@@ -16,7 +16,7 @@ spec:
         - containerPort: 9980
           name: grpc
       - name: envoy
-        image: envoyproxy/envoy-dev:b8325ac4167284b4d566c2779c15ec3c8473dc66
+        image: envoyproxy/envoy-dev:d2bed97c607a64d3cf61d68b68d6fb9d1a2f76dc
         ports:
           - containerPort: 9901
             protocol: TCP
@@ -28,7 +28,7 @@ spec:
           - name: envoy-config-volume
             mountPath: /etc/envoy-config/
         command: ["/usr/local/bin/envoy"]
-        args: ["-c", "/etc/envoy-config/envoy-config-profileservice.yaml", "--service-cluster","svccluster-profileservice"]
+        args: ["-c", "/etc/envoy-config/envoy-config-profileservice.yaml", "--service-cluster","svccluster-profileservice","--log-path","/envoy-log.txt"]
       volumes:
         - name: envoy-config-volume
           configMap:
@@ -44,11 +44,11 @@ metadata:
   labels:
     app: profileservice
 spec:
-  type: ClusterIP
   selector:
     app: profileservice
   ports:
   - name: envoy-grpc
     port: 8980
     targetPort: envoy-grpc
-    protocol: TCP
+
+  
