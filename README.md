@@ -1,4 +1,4 @@
-# Sample project - using envoy with gRPC services
+# Sample project - using envoy with gRPC services 
 
 Steps to Run:
 
